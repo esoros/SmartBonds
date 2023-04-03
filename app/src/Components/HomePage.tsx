@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 
 export default function HomePage(props: {
     signer: Signer,
-    contract: Contract
 }) {
     let [address, setAddress] = useState<string>()
     
