@@ -1,58 +1,59 @@
-import { useEffect, useState } from 'react'
 import './App.css'
-import { Signer } from 'ethers'
+import { useEffect, useState } from 'react'
 import { ConnectMetamask } from './Components/ConnectMetamask'
-import SmartBonds from './Components/Application/SmartBonds'
-import Header from './Components/Header'
-import Marketplace from './Components/Application/Marketplace'
-import MyBonds from './Components/Application/MyBonds'
-import TokenList from './Services/TokenList'
-import { verifyResp } from './Debug/Verify'
+import { Contract, Signer } from 'ethers'
+import HomePage from './Components/HomePage'
+import { Layout } from './Components/Header'
+import Auction from './Components/Auction'
+import Collection from './Components/Collection'
 
-export type Config = {
-  address: string,
-  abi: string
-}
+//injecting the config in
 
-export type Layout = "Marketplace" | "MyBonds" | "SmartBonds"
-
-function getLayout(layout: Layout, wallet: Signer, tokenList: TokenList) {
-  if(layout == "Marketplace") {
-    return <Marketplace />
-  } else if (layout == "MyBonds") {
-    return <MyBonds />
-  } else {
-    return <SmartBonds signer={wallet} tokenList={tokenList} />
+function getLayout(layout: Layout, signer: Signer, contract: Contract) {
+  switch(layout) {
+    case "Auction":
+        return <Auction contract={contract} signer={signer}/>
+    case "Collection":
+        return <Collection contract={contract} signer={signer} />
+      case "Home": 
+        return <HomePage contract={contract} signer={signer} />
   }
 }
 
 function App() {
   const [wallet, setWallet] = useState<Signer>()
-  const [layout, setLayout] = useState<Layout>("SmartBonds")
-  const [config, setConfig] = useState<Config>()
-  const [err, setErr] = useState<String>()
-  
+  const [layout, setLayout] = useState<Layout>("Home")
+  const [contract, setContract] = useState<Contract>()
+  const [url, setUrl] = useState("")
+  const [err, setErr] = useState<string>()
+
   useEffect(() => {
-    fetch("./config.json").then(resp => verifyResp(resp, {
-      address: "", abi: ""
-    })).then(setConfig).catch(setErr)
-  }, [])
+    if(!wallet) {
+      return
+    }
+    
+    fetch("config.json").then(async resp => {
+      if(resp.ok) {
+        let config = await resp.json()
+        setContract(new Contract("", [], wallet))
+      } else {
+        setErr("Unable to load config")
+      }
+    })
+  }, [wallet])
+2
 
   if(err) {
     return <p>{err}</p>
-  } else if(!config) {
-    return <p>Loading...</p>
-  } else {
-    let tokenList = new TokenList()
-    tokenList.addTokens({name: "bitcoin", address: ""})
-    tokenList.freeze()
-  
-    return wallet == undefined ? <ConnectMetamask onConnect={setWallet} /> : 
-      <div>
-          <Header layoutChange={setLayout} signer={wallet} />
-          {getLayout(layout, wallet, tokenList)}
-      </div>
   }
+
+  if(!contract) {
+    return <p>Loading...</p>
+  }
+
+  return wallet == undefined ? 
+    <ConnectMetamask onConnect={setWallet}></ConnectMetamask> : 
+    getLayout(layout, wallet, contract)
 }
 
 export default App

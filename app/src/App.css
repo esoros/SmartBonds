@@ -5,20 +5,18 @@
   text-align: center;
 }
 
-.purchase {
-  border: solid white .10rem;
-  padding: .5rem;
-  border-radius: .25rem;
-  height: 30vh;
-  width: 50vw;
+.connectMetamask {
+  width: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.purchase input {
-  height: 3vh;
-}
-
-.purchase select {
-  height: 3vh;
+.connectMetamask > button {
+  height: 30%;
+  width: 30%;
 }
 
 .logo {

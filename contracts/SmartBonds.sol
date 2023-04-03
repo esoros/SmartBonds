@@ -1,25 +1,71 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 contract SmartBonds {
-    uint _smartBondCount = 0;
+    mapping(address => uint) _count; 
+    mapping(address => mapping(uint => uint)) _smartBondOwners;
     mapping(uint => SmartBond) _smartBonds;
+    uint _featuredBond; 
     struct SmartBond {
         uint id;
+        string data;
+        string description;
         address owner;
     }
-
-    function purchase() public returns (uint) {
-        uint result = _smartBondCount;
-        _smartBonds[_smartBondCount++] = SmartBond(result, msg.sender);
-        return result;
+    
+    address _minter;
+    address _owner;
+    constructor(address minter, address owner) {
+        _minter = minter;
+        _owner = owner;
     }
 
-    function getSmartBond(uint id) public view returns (SmartBond memory) {
-        SmartBond memory bond =  _smartBonds[id];
-        if(bond.owner == address(0)) {
-            revert("unable to find bond");
-        } else {
-            return bond;
-        }
+    function mint() public view returns (uint) {
+        require(msg.sender == _minter, "unable to mint new smart bond");
+        return 1;
+    }
+
+    function setFeatured() public returns (uint) {
+        require(_featuredBond == 0, "featured bond already set");
+    }
+
+    function getSmartBond(uint id) public pure returns (SmartBond memory) {
+        return SmartBond(0, "", "", address(0));
+    }
+
+    function getSmartBonds(address user) public pure returns (SmartBond [] memory) {
+        return new SmartBond[](0);
+    }
+
+    function listSmartBond() public pure returns (uint) {
+        return 0;
+    }
+
+    function getListedSmartBonds() public pure returns (uint) {
+
+    }
+
+    function featuredBond() public pure returns (uint) {
+        return 0;
+    }
+
+    //bonding mechanism -> only featured bonds can be bid on, with this as the origial owner
+    function bid() public pure returns (uint) {
+
+    }
+
+    function bidEnds() public pure returns (uint) {
+
+    }
+
+    function highestBid() public pure returns (uint) {
+
+    }
+
+    function winner() public pure returns (address) {
+
+    }
+
+    function redeem() public pure returns (uint) {
+        //if featured, then all the money goes to us
     }
 }

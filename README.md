@@ -1,1 +1,0 @@
-Deploys smart contracts and then injects configuration into a react-based application
