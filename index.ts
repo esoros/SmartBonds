@@ -1,0 +1,60 @@
+import express from "express"
+import { readFile } from "fs/promises"
+import { join, extname } from "path"
+
+function mimetype(requestPath: string) {
+    switch(extname(requestPath)) {
+        case ".js": return "text/javascript"
+        case ".html": return "text/html"
+        case ".css": return "text/css"
+        case ".svg": return "image/svg+xml"
+        default: throw new Error("mimetype not found")
+    }
+} 
+function main() {
+    let app = express()
+    app.use(async (req, res, next) => {
+        if(req.path.includes("/healthy") || req.path.includes("/api")) {
+            next()
+        } else {
+            if(req.path == "" || req.path == "/") {
+                res.status(200)
+                res.contentType("html")
+                res.send(await readFile("./app/dist/index.html"))
+            } else {
+                try {               
+                    let bytes = await readFile(join("./app/dist", req.path))
+                    res.status(200)
+                    res.contentType(mimetype(req.path))
+                    res.send(bytes)
+                } catch {
+                    res.status(404)
+                    res.contentType("html")
+                    res.send("<p>not found</p>")
+                }
+            }
+        }
+    })
+
+    app.get("/api/ping", (req, res) => {
+        res.send({"ping": "pong"})
+    })
+
+    app.get("/healthy", (req, res) => {
+        res.status(200)
+        res.contentType("json")
+        res.send({"healthy": "ok"})
+    })
+
+    app.get("/health", (req, res) => {
+        res.status(200)
+        res.contentType("json")
+        res.send({"healthy": "ok"})
+    })
+
+    app.listen(8080, () => {
+       console.log("api listening in port 8080") 
+    })
+}
+
+main()
