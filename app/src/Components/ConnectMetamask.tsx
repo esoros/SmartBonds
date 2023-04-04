@@ -14,7 +14,7 @@ export function ConnectMetamask(props: {
     return <div className="connectMetamask">
         <button onClick={connect} disabled={!enabled}>
             {
-                enabled ? "Please Connect MetaMask" : "Please install metamask"
+                enabled ? "Please Connect Metamask" : "Please install metamask"
             }
         </button>
     </div>
