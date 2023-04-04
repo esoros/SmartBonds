@@ -1,7 +1,7 @@
 import express from "express"
 import { readFile } from "fs/promises"
 import { join, extname } from "path"
-import { env } from "process"
+import { cwd, env } from "process"
 
 function mimetype(requestPath: string) {
     switch(extname(requestPath)) {
@@ -9,7 +9,10 @@ function mimetype(requestPath: string) {
         case ".html": return "text/html"
         case ".css": return "text/css"
         case ".svg": return "image/svg+xml"
-        default: throw new Error("mimetype not found")
+        case ".json": return "application/json"
+        case ".png": return "image/png"
+        case ".ico": return "image/png"
+        default: throw new Error("mimetype not found: " + requestPath)
     }
 } 
 function main() {    
@@ -24,11 +27,12 @@ function main() {
                 res.send(await readFile("./app/dist/index.html"))
             } else {
                 try {               
-                    let bytes = await readFile(join("./app/dist", req.path))
+                    let bytes = await readFile(join(cwd(), "/app/dist", req.path))
                     res.status(200)
                     res.contentType(mimetype(req.path))
                     res.send(bytes)
-                } catch {
+                } catch (err) {
+                    console.log("unable to load", err)
                     res.status(404)
                     res.contentType("html")
                     res.send("<p>not found</p>")
