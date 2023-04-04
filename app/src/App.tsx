@@ -1,5 +1,5 @@
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ConnectMetamask } from './Components/ConnectMetamask'
 import { Contract, Signer } from 'ethers'
 import HomePage from './Components/HomePage'
@@ -30,8 +30,7 @@ function App() {
   }
 
   return wallet == undefined ? 
-    <ConnectMetamask onConnect={setWallet}></ConnectMetamask> : 
-    getLayout(layout, wallet)
+    <ConnectMetamask onConnect={setWallet}></ConnectMetamask> : getLayout(layout, wallet)
 }
 
 export default App

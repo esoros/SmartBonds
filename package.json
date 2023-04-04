@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "cd app && npx vite build && cd .. && npx tsc && node ./dist/index.js",
+    "dev": "yarn && cd app && yarn && npx vite build && cd .. && npx tsc && node ./dist/index.js",
     "deploy": "cd contracts && npx solc SmartBonds.sol --bin --abi && npx tsc && node ./dist/Deploy.js"
   },
   "dependencies": {

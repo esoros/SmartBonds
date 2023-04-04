@@ -1,6 +1,7 @@
 import express from "express"
 import { readFile } from "fs/promises"
 import { join, extname } from "path"
+import { env } from "process"
 
 function mimetype(requestPath: string) {
     switch(extname(requestPath)) {
@@ -11,7 +12,7 @@ function mimetype(requestPath: string) {
         default: throw new Error("mimetype not found")
     }
 } 
-function main() {
+function main() {    
     let app = express()
     app.use(async (req, res, next) => {
         if(req.path.includes("/healthy") || req.path.includes("/api")) {
@@ -52,9 +53,15 @@ function main() {
         res.send({"healthy": "ok"})
     })
 
-    app.listen(8080, () => {
-       console.log("api listening in port 8080") 
-    })
+    if(env.SMARTBONDS_PROD) {
+        app.listen(80, () => {
+            console.log("api listening in port 80") 
+         })
+    } else {
+        app.listen(8080, () => {
+            console.log("api listening in port 8080") 
+         })
+    }   
 }
 
 main()
