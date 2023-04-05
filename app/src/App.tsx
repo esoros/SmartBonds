@@ -8,10 +8,12 @@ import Auction from './Components/Auction'
 import Collection from './Components/Collection'
 import TokenService from './Services/TokenService'
 import Donate from './Components/Donate'
+import ActionSheet from './Components/ActionSheet'
 
 function createTokenService() {
   let tokenService = new TokenService()
-  tokenService.AddToken({name: "polygon", address: "0x00"})
+  tokenService.AddToken({name: "polygon", address: "0x00", color: "rgb(122,74,221)"})
+  tokenService.AddToken({name: "bitcoin", address: "0x00", color: "rgb(233,152,61)"})
   tokenService.Freeze()
   return tokenService
 }
@@ -42,6 +44,7 @@ function App() {
   return wallet == undefined ? 
     <ConnectMetamask onConnect={setWallet}></ConnectMetamask> : 
     <div style={{height: "100%", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+        <ActionSheet tokenService={tokenService} />
         <div style={{height: "1%"}} />
         <div style={{flexDirection: "row", width: "100%"}}>
           <Header onLayout={setLayout} />

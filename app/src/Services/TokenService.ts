@@ -1,6 +1,7 @@
 export type Token = {
     name: string
     address: string
+    color: string
 }
 
 export default class TokenService {

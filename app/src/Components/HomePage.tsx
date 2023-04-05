@@ -12,8 +12,15 @@ export default function HomePage(props: {
     let [token, setToken] = useState(props.tokenService.GetDefaultToken())
 
     useEffect(() => {
-        
+        document.getElementById("root")?.addEventListener("ActionSheetClosed", onActionSheetClosed)
+        return () => document.getElementById("root")?.removeEventListener("ActionSheetClosed", onActionSheetClosed)
     }, [])
+
+    function onActionSheetClosed(event: any) {
+        if(event.detail) {
+            setToken(event.detail)
+        }
+    }
 
     function mint() {
         let mintArgs = {
@@ -25,9 +32,13 @@ export default function HomePage(props: {
         alert("call smart contract here..." + JSON.stringify(mintArgs))
     }
 
+    function showActionSheet() {
+        document.getElementById("root")?.dispatchEvent(new CustomEvent("ShowActionSheet"))
+    }
+
     return <div style={{display: "flex", flexDirection: "column", width: "100%", height: "100%"}}>
         <div style={{flexGrow: 1}} />
-        <div style={{placeSelf: "center", display: "flex", flexDirection: "column", height: "30%", width: "60%", alignItems: "center", justifyContent: "center", borderRadius: ".25rem", backgroundColor: "rgb(249,249,249)"}}>
+        <div style={{placeSelf: "center", display: "flex", flexDirection: "column", height: "30%", width: "60%", alignItems: "center", justifyContent: "center", borderRadius: ".25rem", backgroundColor: "rgb(249,249,249)", maxWidth: "750px"}}>
             <div style={{display: "flex", flexDirection: "row"}}>
                 <input type="range" value={duration} min={1} max={100} onChange={(e) => setDuration(parseInt
                     (e.target.value))} />
@@ -42,9 +53,9 @@ export default function HomePage(props: {
             </div>
             <div style={{display: "flex", flexDirection: "row", margin: "1.5%", gap: "3%"}}>
                 <input value={amount} onChange={(e) => setAmount(e.target.value)} />
-                <img onClick={() => alert("show change token modal here...")} style={{height: "1.5rem"}} src={`/${token.name}.svg`} />
+                <img className="purchaseToken" onClick={() => showActionSheet()} style={{height: "1.5rem"}} src={`/${token.name}.svg`} />
             </div>
-            <button onClick={() => mint()} style={{backgroundColor: "rgb(122,74,221)", width: "70%", margin: "1.5%"}}>
+            <button onClick={() => mint()} style={{backgroundColor: token.color, width: "70%", margin: "1.5%"}}>
                 Mint
             </button>
         </div>
