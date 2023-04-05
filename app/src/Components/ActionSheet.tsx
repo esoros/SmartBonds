@@ -7,13 +7,16 @@ export default function ActionSheet(props: {
     let [closed, setClosed] = useState(true)
     let [left, setLeft] = useState(window.innerWidth * .10)
     let [top, setTop] = useState(window.innerHeight * .10)
+    let [content, setContent] = useState<React.ReactElement>()
     let sheetRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         addEventListener("resize", onWindowResize)
         document.getElementById("root")?.addEventListener("ShowActionSheet", onShowActionSheet)
+        document.getElementById("root")?.addEventListener("HideActionSheet", onClose)
         return () => {
             document.getElementById("root")?.removeEventListener("ShowActionSheet", onShowActionSheet)
+            document.getElementById("root")?.removeEventListener("HideActionSheet", onClose)
             removeEventListener("resize", onWindowResize)
         }
     }, [])
@@ -23,15 +26,20 @@ export default function ActionSheet(props: {
         setTop(window.innerHeight * .10)
     }
 
-    function onClose(token?: Token) {
+    function onClose() {
         sheetRef.current?.classList.remove("actionSheetDisplay")
         sheetRef.current?.classList.add("actionSheetHide")
-        setTimeout(() => setClosed(true), 50)
-        document.getElementById("root")?.dispatchEvent(new CustomEvent("ActionSheetClosed", {detail: token}))
+        setTimeout(() => {
+            setClosed(true)
+            setContent(undefined)
+        }, 100)
     }
 
-    function onShowActionSheet() {
+    function onShowActionSheet(event: any) {
         setClosed(false)
+        if(event.detail) {
+            setContent(event.detail)
+        }
         sheetRef.current?.classList.add("actionSheetDisplay")
     }
 
@@ -46,17 +54,9 @@ export default function ActionSheet(props: {
         display: closed ? "none" : "flex",
         flexDirection: "column"
     }}>
-        <button style={{textDecoration: "underline", alignContent: "flex-end", width: "10%", display: "grid", placeContent: "center"}} onClick={() => onClose(undefined)}>close</button>
+        <button style={{textDecoration: "underline", alignContent: "flex-end", width: "10%", display: "grid", placeContent: "center"}} onClick={() => onClose()}>close</button>
         {
-            props.tokenService.GetTokens().map(token => {
-                return <div onClick={() => {onClose(token)}} className="actionSheetHover" style={{display: "flex", flexDirection: "row", width: "100%", alignItems: "center"}}>
-                    <div style={{width: "3%"}} />
-                    <p style={{cursor: "default"}}>{token.name}</p>
-                    <div style={{flexGrow: "1"}} />
-                    <img src={`/${token.name}.svg`} style={{height: "3vh"}} />
-                    <div style={{width: "3%"}} />
-                </div>
-            })
+            content
         }        
     </div>
 }

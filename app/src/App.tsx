@@ -27,7 +27,7 @@ function getLayout(layout: Layout, signer: Signer, tokenService: TokenService) {
       case "Home": 
         return <HomePage tokenService={tokenService} signer={signer} />
       case "Donate":
-        return <Donate></Donate>
+        return <Donate signer={signer}></Donate>
   }
 }
 
@@ -47,7 +47,7 @@ function App() {
         <ActionSheet tokenService={tokenService} />
         <div style={{height: "1%"}} />
         <div style={{flexDirection: "row", width: "100%"}}>
-          <Header onLayout={setLayout} />
+          <Header onLayout={setLayout} signer={wallet} />
           <div style={{flexGrow: 1}} />
         </div>
         <div style={{flexGrow: 1}} />

@@ -1,6 +1,7 @@
 import { Contract, Signer } from "ethers"
 import { useEffect, useState } from "react"
 import TokenService from "../Services/TokenService"
+import TokenList from "./TokenList"
 
 export default function HomePage(props: {
     signer: Signer,
@@ -10,17 +11,6 @@ export default function HomePage(props: {
     let [duration, setDuration] = useState(10)
     let [unit, setUnit] = useState("hours")
     let [token, setToken] = useState(props.tokenService.GetDefaultToken())
-
-    useEffect(() => {
-        document.getElementById("root")?.addEventListener("ActionSheetClosed", onActionSheetClosed)
-        return () => document.getElementById("root")?.removeEventListener("ActionSheetClosed", onActionSheetClosed)
-    }, [])
-
-    function onActionSheetClosed(event: any) {
-        if(event.detail) {
-            setToken(event.detail)
-        }
-    }
 
     function mint() {
         let mintArgs = {
@@ -33,7 +23,13 @@ export default function HomePage(props: {
     }
 
     function showActionSheet() {
-        document.getElementById("root")?.dispatchEvent(new CustomEvent("ShowActionSheet"))
+        document.getElementById("root")?.dispatchEvent(new CustomEvent("ShowActionSheet", {
+            detail: <TokenList onClose={(t) => {
+                if(t) {
+                    setToken(t)
+                }
+            }} tokenService={props.tokenService} />
+        }))
     }
 
     return <div style={{display: "flex", flexDirection: "column", width: "100%", height: "100%"}}>
