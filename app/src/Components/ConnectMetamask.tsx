@@ -11,7 +11,7 @@ export function ConnectMetamask(props: {
         props.onConnect(provider.getSigner())
     }
     
-    return <div className="connectMetamask">
+    return <div className="connectMetamask" style={{height: "100%", width: "100%"}}>
         <button onClick={connect} disabled={!enabled}>
             {
                 enabled ? "Please Connect Metamask" : "Please install metamask"

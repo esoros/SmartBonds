@@ -4,6 +4,6 @@ export default function Collection(props: {
     signer: Signer,
 }) {
     return <div>
-        <p></p>
+        <p>No Smart Bonds found, please visit the store</p>
     </div>
 }
