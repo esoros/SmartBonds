@@ -1,17 +1,18 @@
 export type Layout = "Home" | "Collection" | "Auction" | "Donate"
 import { useEffect, useState } from "react"
 import "../App.css"
-import { Signer } from "ethers"
+import { BigNumber, Signer } from "ethers"
+import { formatEth } from "../Utils/Utils"
 
 export default function Header(props: {
     onLayout: (layout: Layout) => void,
     signer: Signer
 }) {
-    let [eth, setEth] = useState(0)
+    let [eth, setEth] = useState<BigNumber>()
     
     useEffect(() => {
         props.signer.getAddress().then(address => {
-            props.signer.provider!.getBalance(address).then(bn => setEth(bn.toNumber()))
+            props.signer.provider!.getBalance(address).then(bn => setEth(bn))
         })
     }, [])
 
@@ -21,7 +22,7 @@ export default function Header(props: {
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Collection")}>Collection</button>
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Auction")}>Auction</button>
         <div style={{flexGrow: 1}} />
-        <button style={{height: "7vh"}}>{eth} Eth</button>
+        <button style={{height: "7vh"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
         <button onClick={() => props.onLayout("Donate")} style={{height: "7vh"}}>Donate</button>
         <div style={{width: "3%"}}></div>
     </div>

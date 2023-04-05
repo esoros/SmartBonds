@@ -1,4 +1,4 @@
-import { Contract, Signer } from "ethers";
+import { Signer } from "ethers";
 
 export default function Auction(props: {
     signer: Signer,

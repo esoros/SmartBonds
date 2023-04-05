@@ -1,7 +1,7 @@
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ConnectMetamask } from './Components/ConnectMetamask'
-import { Signer } from 'ethers'
+import { ContractInterface, Signer } from 'ethers'
 import HomePage from './Components/HomePage'
 import Header, { Layout } from './Components/Header'
 import Auction from './Components/Auction'
@@ -9,6 +9,25 @@ import Collection from './Components/Collection'
 import TokenService from './Services/TokenService'
 import Donate from './Components/Donate'
 import ActionSheet from './Components/ActionSheet'
+
+export type Config = {
+  donationAddress: string,
+  address: string,
+  abi: ContractInterface
+}
+
+function verifyConfig(config: any) {
+  if(!config.donationAddress) {
+    throw new Error("unable to validate config")
+  }
+  if(!config.address) {
+    throw new Error("unable to validate config")
+  }
+  if(!config.abi) {
+    throw new Error("unable to validate config")
+  }
+  return config as Config
+}
 
 function createTokenService() {
   let tokenService = new TokenService()
@@ -18,7 +37,7 @@ function createTokenService() {
   return tokenService
 }
 
-function getLayout(layout: Layout, signer: Signer, tokenService: TokenService) {
+function getLayout(layout: Layout, signer: Signer, tokenService: TokenService, config: Config) {
   switch(layout) {
     case "Auction":
         return <Auction signer={signer}/>
@@ -27,7 +46,7 @@ function getLayout(layout: Layout, signer: Signer, tokenService: TokenService) {
       case "Home": 
         return <HomePage tokenService={tokenService} signer={signer} />
       case "Donate":
-        return <Donate signer={signer}></Donate>
+        return <Donate config={config} signer={signer}></Donate>
   }
 }
 
@@ -36,9 +55,24 @@ function App() {
   const [layout, setLayout] = useState<Layout>("Home")
   const [err, setErr] = useState<string>()
   const [tokenService, _] = useState(createTokenService())
+  const [config, setConfig] = useState<Config>()
+
+  useEffect(() => {
+    fetch("./config.json").then(async resp => {
+      if(resp.ok) {
+        setConfig(verifyConfig(await resp.json()))
+      } else {
+        setErr("unable to load config")
+      }
+    })
+  }, [])
 
   if(err) {
     return <p>{err}</p>
+  }
+
+  if(!config) {
+    return <p>Loading...</p>
   }
 
   return wallet == undefined ? 
@@ -51,7 +85,7 @@ function App() {
           <div style={{flexGrow: 1}} />
         </div>
         <div style={{flexGrow: 1}} />
-        {getLayout(layout, wallet, tokenService)}
+        {getLayout(layout, wallet, tokenService, config)}
         <div style={{flexGrow: 1}} />
     </div>
 }
