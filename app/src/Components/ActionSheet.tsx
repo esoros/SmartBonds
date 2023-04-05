@@ -1,29 +1,44 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import TokenService, { Token } from "../Services/TokenService"
 
 export default function ActionSheet(props: {
     tokenService: TokenService
 }) {
     let [closed, setClosed] = useState(true)
+    let [left, setLeft] = useState(window.innerWidth * .10)
+    let [top, setTop] = useState(window.innerHeight * .10)
+    let sheetRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
+        addEventListener("resize", onWindowResize)
         document.getElementById("root")?.addEventListener("ShowActionSheet", onShowActionSheet)
-        return () => document.getElementById("root")?.removeEventListener("ShowActionSheet", onShowActionSheet)
+        return () => {
+            document.getElementById("root")?.removeEventListener("ShowActionSheet", onShowActionSheet)
+            removeEventListener("resize", onWindowResize)
+        }
     }, [])
     
+    function onWindowResize() {
+        setLeft(window.innerWidth * .10)
+        setTop(window.innerHeight * .10)
+    }
+
     function onClose(token?: Token) {
-        setClosed(true)
+        sheetRef.current?.classList.remove("actionSheetDisplay")
+        sheetRef.current?.classList.add("actionSheetHide")
+        setTimeout(() => setClosed(true), 50)
         document.getElementById("root")?.dispatchEvent(new CustomEvent("ActionSheetClosed", {detail: token}))
     }
 
     function onShowActionSheet() {
         setClosed(false)
+        sheetRef.current?.classList.add("actionSheetDisplay")
     }
 
-    return <div className="actionSheet" style={{
-        position: "absolute",
-        left: 80,
-        top: 160,
+    return <div className="actionSheet" ref={sheetRef} style={{
+        position: "fixed",
+        left: left,
+        top: top,
         zIndex: 1,
         height: "80vh",
         width: "80vw",

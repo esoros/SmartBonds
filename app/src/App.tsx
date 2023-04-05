@@ -43,7 +43,7 @@ function App() {
 
   return wallet == undefined ? 
     <ConnectMetamask onConnect={setWallet}></ConnectMetamask> : 
-    <div style={{height: "100%", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+    <div style={{overflowX: "hidden", height: "100%", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
         <ActionSheet tokenService={tokenService} />
         <div style={{height: "1%"}} />
         <div style={{flexDirection: "row", width: "100%"}}>

@@ -38,7 +38,7 @@ export default function HomePage(props: {
 
     return <div style={{display: "flex", flexDirection: "column", width: "100%", height: "100%"}}>
         <div style={{flexGrow: 1}} />
-        <div style={{placeSelf: "center", display: "flex", flexDirection: "column", height: "30%", width: "60%", alignItems: "center", justifyContent: "center", borderRadius: ".25rem", backgroundColor: "rgb(249,249,249)", maxWidth: "750px"}}>
+        <div style={{placeSelf: "center", display: "flex", flexDirection: "column", height: "40%", width: "60%", alignItems: "center", justifyContent: "center", borderRadius: ".25rem", backgroundColor: "rgb(249,249,249)", maxWidth: "750px"}}>
             <div style={{display: "flex", flexDirection: "row"}}>
                 <input type="range" value={duration} min={1} max={100} onChange={(e) => setDuration(parseInt
                     (e.target.value))} />
