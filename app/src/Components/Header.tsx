@@ -10,10 +10,20 @@ export default function Header(props: {
 }) {
     let [eth, setEth] = useState<BigNumber>()
     
-    useEffect(() => {
+    function getWalletBalance() {
         props.signer.getAddress().then(address => {
             props.signer.provider!.getBalance(address).then(bn => setEth(bn))
         })
+    }
+
+    function ethUpdated() {
+        getWalletBalance()
+    }
+
+    useEffect(() => {
+        getWalletBalance()
+        document.getElementById("root")?.addEventListener("EthereumAmountUpdated", ethUpdated)
+        return () => document.getElementById("root")?.removeEventListener("EthereumAmountUpdated", ethUpdated)
     }, [])
 
     return <div className="header" style={{display: "flex", flexDirection: "row", width: "100%"}}>

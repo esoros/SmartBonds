@@ -1,6 +1,6 @@
-import TokenService, { Token } from "../Services/TokenService";
+import TokenService, { Token } from "../../Services/TokenService";
 
-export default function TokenList(props: {
+export default function TokenSheet(props: {
     tokenService: TokenService,
     onClose: (token?: Token) => void
 })

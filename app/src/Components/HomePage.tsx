@@ -1,7 +1,7 @@
-import { Contract, Signer } from "ethers"
-import { useEffect, useState } from "react"
+import { Signer } from "ethers"
+import {  useState } from "react"
 import TokenService from "../Services/TokenService"
-import TokenList from "./TokenList"
+import TokenSheet from "../Components/Sheets/TokenSheet"
 
 export default function HomePage(props: {
     signer: Signer,
@@ -24,7 +24,7 @@ export default function HomePage(props: {
 
     function showActionSheet() {
         document.getElementById("root")?.dispatchEvent(new CustomEvent("ShowActionSheet", {
-            detail: <TokenList onClose={(t) => {
+            detail: <TokenSheet onClose={(t) => {
                 if(t) {
                     setToken(t)
                 }
