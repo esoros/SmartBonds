@@ -33,7 +33,7 @@ export default function AuctionSheet(props: {
     }
     
     return <div id="auctionsheet_div" style={{display: "flex", flexDirection: "column", height: "100%", alignItems: "center"}}>
-    <img id="audctionsheet_image_div" src={"/IMG_" +  props.pic +".png"} style={{marginBottom: "1rem", width: imageWidth + "px"}} />
+    <img id="audctionsheet_image_div" src={"/IMG_" +  props.pic +".png"} style={{marginBottom: "1rem", width: imageWidth + "px", borderRadius: ".25rem .25rem 0px 0px"}} />
     <input placeholder="amount" style={{width: imageWidth + "px", padding: ".5rem"}} />
     <div style={{display: "flex", flexDirection: "row", width: imageWidth + "px", alignItems: "center"}}>
         <p style={{margin: 0, padding: 0}}>Highest Bidder:</p>
