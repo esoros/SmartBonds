@@ -2,13 +2,14 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import { ConnectMetamask } from './Components/ConnectMetamask'
 import { ContractInterface, Signer } from 'ethers'
-import HomePage from './Components/HomePage'
+import MintBond from './Components/MintBond'
 import Header, { Layout } from './Components/Header'
 import Auction from './Components/Auction'
 import Collection from './Components/Collection'
 import TokenService from './Services/TokenService'
 import Donate from './Components/Donate'
 import ActionSheet from './Components/ActionSheet'
+import Admin from './Components/Admin'
 
 export type Config = {
   donationAddress: string,
@@ -37,16 +38,18 @@ function createTokenService() {
   return tokenService
 }
 
-function getLayout(layout: Layout, signer: Signer, tokenService: TokenService, config: Config) {
+function getLayout(layout: Layout, signer: Signer, tokenService: TokenService, config: Config, renderHeight: number) {
   switch(layout) {
     case "Auction":
         return <Auction signer={signer}/>
     case "Collection":
         return <Collection signer={signer} />
       case "Home": 
-        return <HomePage tokenService={tokenService} signer={signer} />
+        return <Collection signer={signer} />
       case "Donate":
-        return <Donate config={config} signer={signer}></Donate>
+        return <Donate config={config} signer={signer} renderHeight={renderHeight}></Donate>
+      case "Admin":
+        return <Admin signer={signer} renderHeight={renderHeight}/>
   }
 }
 
@@ -56,6 +59,7 @@ function App() {
   const [err, setErr] = useState<string>()
   const [tokenService, _] = useState(createTokenService())
   const [config, setConfig] = useState<Config>()
+  const [renderHeight, setRenderHeight] = useState<number>(0)
 
   useEffect(() => {
     fetch("./config.json").then(async resp => {
@@ -77,15 +81,21 @@ function App() {
 
   return wallet == undefined ? 
     <ConnectMetamask onConnect={setWallet}></ConnectMetamask> : 
-    <div style={{overflowX: "hidden", height: "100%", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+    <div style={{overflowX: "hidden", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100%"}}>
         <ActionSheet tokenService={tokenService} />
         <div style={{height: "1%"}} />
-        <div style={{flexDirection: "row", width: "100%"}}>
-          <Header onLayout={setLayout} signer={wallet} />
+        <div style={{flexDirection: "row", width: "100%", display: "flex"}}>
+          <Header onRenderHeight={setRenderHeight} onLayout={setLayout} signer={wallet} />
           <div style={{flexGrow: 1}} />
         </div>
         <div style={{flexGrow: 1}} />
-        {getLayout(layout, wallet, tokenService, config)}
+        {
+          <div style={{display: "flex", flexDirection: "row", width: "100%", height: "100%"}}>
+            <div style={{width: "1%"}} />
+            {getLayout(layout, wallet, tokenService, config, renderHeight)}
+            <div style={{width: "1%"}} />
+          </div>
+        }
         <div style={{flexGrow: 1}} />
     </div>
 }

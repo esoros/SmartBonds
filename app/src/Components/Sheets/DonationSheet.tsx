@@ -2,6 +2,7 @@ import { BigNumber, Signer } from "ethers"
 import { Config } from "../../App"
 import { useEffect, useState } from "react"
 import { formatEth } from "../../Utils/Utils"
+import ProgressIndicator from "../ProgressIndicator"
 
 type State = "Donating Complete" | "Donation Error" | "Donating"
 
@@ -50,11 +51,11 @@ export function DonateSheet(props: {signer: Signer,
     } else {
         if(state == 'Donating') {
             return <div style={{display: "grid", height: "100%", placeContent: "center"}}>
-                <p>Donating....</p> 
+                <ProgressIndicator text="Processing Your Donation" />
             </div>
         } else if (state == "Donating Complete") {
             return <div style={{display: "grid", height: "100%", placeContent: "center"}}>
-                <p>Thanks for your donation</p>
+                <p>Thank you for your donation</p>
             </div>
         } else {
             return <div style={{display: "grid", height: "100%", placeContent: "center"}}>

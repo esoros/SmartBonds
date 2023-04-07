@@ -2,6 +2,72 @@
   text-align: center;
 }
 
+.auctionButton {
+  height: 3vh
+}
+
+.nftButton:hover {
+  border: "solid white 1rem"
+}
+
+.mintButton {
+  animation-name: mintButton;
+  animation-duration: .25s;
+  animation-fill-mode: forwards;
+  border-radius: .25rem;
+}
+
+.mintButton:hover {
+  animation-name: mintButtonUndo;
+  animation-duration: .25s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes mintButton {
+  0% {
+    transform: scale(1.03, 1.03);
+  }
+
+  100% {
+    transform: scale(1.0, 1.0);
+  }
+}
+
+@keyframes mintButtonUndo {
+    0% {
+      transform: scale(1.0, 1.0);
+    }
+
+    100% {
+      transform: scale(1.03, 1.03);
+    }
+}
+
+.collectionImg {
+  animation-name: iconhoverundo;
+  animation-duration: .25s;
+  animation-fill-mode: forwards;
+  border-radius: .25rem;
+}
+
+.collectionImg:hover {
+  animation-name: iconhover;
+  animation-duration: .25s;
+  animation-fill-mode: forwards;
+}
+
+.collectionGrid {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  display: grid;
+  width: 100%;
+  gap: .25rem;
+}
+
+.header {
+  margin: 1rem;
+}
+
 .header > button {
   height: "10%";
 }
@@ -86,6 +152,7 @@
 .connectMetamask > button {
   height: 30vh;
   width: 50vw;
+  max-width: 500px;
 }
 
 .logo {
