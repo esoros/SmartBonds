@@ -49,13 +49,38 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  animation-name: iconhoverundo;
+  animation-duration: .25s;
+  animation-fill-mode: forwards;
 }
-button:hover {
-  border-color: #646cff;
+
+button:hover{ 
+  animation-name: iconhover;
+  animation-duration: .25s;
+  animation-fill-mode: forwards;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+@keyframes buttonhoverundo {
+  0% {
+    transform: scale(1.1, 1.1);
+  }
+
+  100% {
+    transform: scale(1.0, 1.0);
+  }
+}
+
+@keyframes buttonhover {
+  from {
+    transform: scale(1.0, 1.0);
+  }
+  to {
+    transform: scale(1.2, 1.2);
+  }
 }
 
 @media (prefers-color-scheme: light) {

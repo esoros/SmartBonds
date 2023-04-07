@@ -45,9 +45,9 @@ export default function Header(props: {
     }, [renderHeight])
 
     return <div ref={distRef} className="header" style={{display: "flex", flexDirection: "row", width: "100%", alignItems: "center", justifyContent: "center"}}>
-        <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.art</h2>
+        <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.ai</h2>
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Home")}>Home</button>
-        <button style={{height: "7vh"}} onClick={() => props.onLayout("Auction")}>Auction</button>
+        <button style={{height: "7vh"}} onClick={() => props.onLayout("Auction")}>Marketplace</button>
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Collection")}>Wallet</button>
         {
             address == "0x7880aA5B5c9C8d30719Db0747DA60875B9115E19" ? 
