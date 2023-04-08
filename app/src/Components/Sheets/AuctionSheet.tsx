@@ -1,14 +1,16 @@
 import { createRef, useEffect, useState } from "react"
 import { Signer } from "ethers"
 
+//padding on the auction sheet
+
 type state = "Processing" | "Placed" | "Error"
 
 export default function AuctionSheet(props: {
     signer: Signer
     pic: string
 }) {
-    
     let [imageWidth, setImageWidth] = useState<Number>(0)
+    let [bidAmount, setBidAmount] = useState<string>("Bid Amount:")
 
     function calculateImageWidth() {
         let img  = document.getElementById("audctionsheet_image_div") as HTMLImageElement
@@ -32,14 +34,20 @@ export default function AuctionSheet(props: {
         alert("place bid here...")
     }
     
-    return <div id="auctionsheet_div" style={{display: "flex", flexDirection: "column", height: "100%", alignItems: "center"}}>
-    <img id="audctionsheet_image_div" src={"/IMG_" +  props.pic +".png"} style={{marginBottom: "1rem", width: imageWidth + "px", borderRadius: ".25rem .25rem 0px 0px"}} />
-    <input placeholder="amount" style={{width: imageWidth + "px", padding: ".5rem"}} />
-    <div style={{display: "flex", flexDirection: "row", width: imageWidth + "px", alignItems: "center"}}>
-        <p style={{margin: 0, padding: 0}}>Highest Bidder:</p>
-        <p style={{margin: 0, padding: 0}}>{"0x0000000000000000"}</p>
-        <div style={{flexGrow: 1}} />
-        <button onClick={placeBid}>Place Bid</button>
+    return <div id="auctionsheet_div" style={{display: "flex", flexDirection: "column", height: "100%", alignItems: "center", justifyContent: "center"}}>
+    <img id="audctionsheet_image_div" src={"/IMG_" +  props.pic +".png"} style={{width: imageWidth + "px", borderRadius: ".25rem .25rem 0px 0px"}} />
+    <div style={{borderRadius: "0px 0px .25rem .25rem", paddingBottom: ".25rem", display: "flex", flexDirection: "column", backgroundColor: "white", width: imageWidth + "px"}}>
+        <div style={{display: "flex", flexDirection: "row", width: "100%"}}>
+            <img src="bitcoin.svg" style={{height: "2vh", marginTop: ".70rem", marginLeft: "1rem"}} />
+            <input className="auctioninput" value={"  " + bidAmount} placeholder=" bid amount" style={{marginTop: ".40rem", border: "0", height: "3vh"}} onChange={(e) => setBidAmount(e.target.value.trimStart())} />
+        </div>
+        <div style={{marginBottom: "0px 0px .25rem .25rem", backgroundColor: "white", display: "flex", flexDirection: "row", width: imageWidth + "px", alignItems: "center", justifyContent: "center"}}>
+            <p style={{margin: 0, padding: 0, paddingLeft: "1rem"}}>Highest Bidder:</p>
+            <div style={{flexGrow: 1}} />
+            <p style={{margin: 0, padding: 0}}>{"0x0000000000000000"}</p>
+            <div style={{flexGrow: 1}} />
+            <button style={{cursor: "default", margin: ".25rem"}} onClick={placeBid}>Place Bid</button>
+        </div>
     </div>
 </div>
 }   
