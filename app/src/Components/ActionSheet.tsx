@@ -5,25 +5,34 @@ export default function ActionSheet(props: {
     tokenService: TokenService
 }) {
     let [closed, setClosed] = useState(true)
-    let [left, setLeft] = useState(window.innerWidth * .10)
-    let [top, setTop] = useState(window.innerHeight * .10)
+    let [left, setLeft] = useState(0)
+    let [top, _] = useState(window.innerHeight * .10)
     let [content, setContent] = useState<React.ReactElement>()
     let sheetRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        addEventListener("resize", onWindowResize)
+        onWindowResize()
+        window.addEventListener("resize", onWindowResize)
         document.getElementById("root")?.addEventListener("ShowActionSheet", onShowActionSheet)
         document.getElementById("root")?.addEventListener("HideActionSheet", onClose)
         return () => {
             document.getElementById("root")?.removeEventListener("ShowActionSheet", onShowActionSheet)
             document.getElementById("root")?.removeEventListener("HideActionSheet", onClose)
-            removeEventListener("resize", onWindowResize)
+            window.removeEventListener("resize", onWindowResize)
         }
     }, [])
+
+    useEffect(() => {
+        onWindowResize()
+    }, [sheetRef.current])
     
     function onWindowResize() {
-        setLeft(window.innerWidth * .10)
-        setTop(window.innerHeight * .10)
+        console.log("window resize", {
+            windowWidth: window.innerWidth * .60,
+            modalWidth: 400
+        })
+        let divWidth = Math.max(window.innerWidth * .40, 400)
+        setLeft((window.innerWidth - divWidth) / 2)
     }
 
     function onClose() {
@@ -49,7 +58,8 @@ export default function ActionSheet(props: {
         top: top,
         zIndex: 1,
         height: "80vh",
-        width: "80vw",
+        width: "40vw",
+        minWidth: "400px",
         backgroundColor:"rgb(249,249,249)",
         display: closed ? "none" : "flex",
         flexDirection: "column"
