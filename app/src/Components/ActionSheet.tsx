@@ -31,7 +31,7 @@ export default function ActionSheet(props: {
             windowWidth: window.innerWidth * .60,
             modalWidth: 400
         })
-        let divWidth = Math.max(window.innerWidth * .40, 400)
+        let divWidth = Math.max(window.innerWidth * .40, 450)
         setLeft((window.innerWidth - divWidth) / 2)
     }
 
@@ -59,10 +59,11 @@ export default function ActionSheet(props: {
         zIndex: 1,
         height: "80vh",
         width: "40vw",
-        minWidth: "400px",
+        minWidth: "450px",
         backgroundColor:"rgb(249,249,249)",
         display: closed ? "none" : "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        borderRadius: ".25rem"
     }}>
         <button style={{textDecoration: "underline", alignContent: "flex-end", width: "10%", display: "grid", placeContent: "center"}} onClick={() => onClose()}>close</button>
         {
