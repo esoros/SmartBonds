@@ -7,7 +7,7 @@ export type Layout = "Home" | "Collection" | "Auction" | "Donate" | "Admin"
 export default function Header(props: {
     onLayout: (layout: Layout) => void,
     onRenderHeight?: (height: number) => void
-    signer: Signer
+    mnemonic: string
 }) {
     let [eth, setEth] = useState<BigNumber>()
     let [address, setAddress] = useState("")
@@ -17,10 +17,7 @@ export default function Header(props: {
     let distRef = createRef<HTMLDivElement>()
 
     function getWalletBalance() {
-        props.signer.getAddress().then(address => {
-            setAddress(address)
-            props.signer.provider!.getBalance(address).then(bn => setEth(bn))
-        })
+        
     }
 
     function ethUpdated() {
@@ -65,7 +62,7 @@ export default function Header(props: {
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
                     >
-                        <button style={{height: "7vh"}} onClick={() => {
+                        <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
                             props.onLayout("Home")
                             setShowDropdown(false)
                         }}>Home</button>
@@ -88,21 +85,21 @@ export default function Header(props: {
     } else if(renderWidth <= 1000) {
         return <div ref={distRef} className="header" style={{display: "flex", flexDirection: "row", maxWidth: "100%", width: "100%", alignItems: "center", justifyContent: "center"}}>
                 <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.ai</h2>
-                <button style={{height: "7vh"}} onClick={() => {
+                <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
                     props.onLayout("Home")
                     setShowDropdown(false)
                 }}>Home</button>
-                <button style={{height: "7vh"}} onClick={() => {
+                <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
                     props.onLayout("Auction")
                     setShowDropdown(false)
                 }}>Marketplace</button>
-                <button style={{height: "7vh"}} onClick={() => {
+                <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
                     props.onLayout("Collection")
                     setShowDropdown(false)
                 }}>Wallet</button>
                 <div id="header_spacer" style={{flexGrow: 1}} />
                 <button id="menubutton" onClick={() => { setShowDropdown(dropdown => !dropdown)}} 
-                    style={{height: "7vh", fontSize: "1.25rem"}}>=</button>
+                    style={{height: "7vh", minHeight: "50px", fontSize: "1.25rem"}}>=</button>
                 {
                     showDropdown ? <div style=
                     {{display: "flex", flexDirection: "column", zIndex: "1", position: "absolute", 
@@ -110,11 +107,11 @@ export default function Header(props: {
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
                     >
-                        <button style={{height: "7vh"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
+                        <button style={{height: "7vh", minHeight: "50px"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
                         <button onClick={() => {
                             props.onLayout("Donate")
                             setShowDropdown(false)
-                        }} style={{height: "7vh"}}>😃 Donate</button>
+                        }} style={{height: "7vh", minHeight: "50px"}}>😃 Donate</button>
                     </div> : <></>
                 }
             </div>

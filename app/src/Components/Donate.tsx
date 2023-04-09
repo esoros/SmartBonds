@@ -3,7 +3,7 @@ import { Config } from "../App"
 import { DonateSheet } from "./Sheets/DonationSheet"
 import { useEffect, useState } from "react"
 
-export default function Donate(props: {signer: Signer, config: Config, renderHeight: number}) {    
+export default function Donate(props: {mnemonic: string, config: Config, renderHeight: number}) {    
     const [renderHeight, setRenderHeight] = useState<number>(props.renderHeight)
     
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function Donate(props: {signer: Signer, config: Config, renderHei
         document.getElementById("root")?.dispatchEvent(new CustomEvent("ShowActionSheet", {
             detail: <DonateSheet 
             config={props.config}
-            signer={props.signer} />
+            menonic={props.mnemonic} />
         }))
     }
     

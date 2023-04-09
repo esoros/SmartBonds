@@ -6,17 +6,19 @@ import ProgressIndicator from "../ProgressIndicator"
 
 type State = "Donating Complete" | "Donation Error" | "Donating"
 
-export function DonateSheet(props: {signer: Signer, 
+export function DonateSheet(props: {menonic: string, 
     config: Config,
 }) {
     let [state, setState] = useState<State>()
     let [eth, setEth] = useState<BigNumber>()
     let [percent, setPercent] = useState(5)
     
+    function getBalance() {
+
+    }
+
     useEffect(() => {
-        props.signer.getAddress().then(address => {
-            props.signer.provider!.getBalance(address).then(bn => setEth(bn))
-        })
+        getBalance()
     }, [])
 
     async function donate() {
@@ -30,8 +32,8 @@ export function DonateSheet(props: {signer: Signer,
         }
         try {
             setState("Donating")
-            let resp = await props.signer.sendTransaction(tx)
-            await resp.wait()
+            //let resp = await props.signer.sendTransaction(tx)
+            //await resp.wait()
             setState("Donating Complete")
             document.getElementById("root")?.dispatchEvent(new CustomEvent("EthereumAmountUpdated"))
         } catch (err) {
@@ -42,7 +44,7 @@ export function DonateSheet(props: {signer: Signer,
     
     if(!state) {
         return <div style={{display: "flex", flexDirection: "column", height: "100%", alignItems: "center", justifyContent: "center"}}>
-        <div style={{display: "flex", flexDirection: "column"}}>
+        <div style={{display: "flex", flexDirection: "column", backgroundColor: "white", padding: "5rem", borderRadius: ".5rem"}}>
             <p style={{margin: 0, padding: 0}}>{formatEth(eth?.mul(percent).div(100) ?? BigNumber.from(0))} Eth</p>
             <input type="range" min={0} max={100} value={percent} onChange={(e) => setPercent(parseInt(e.target.value))} />
             <button onClick={donate} style={{backgroundColor: "#646cff"}}>Donate</button>

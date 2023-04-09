@@ -1,12 +1,8 @@
-import { createRef, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Signer } from "ethers"
 
-//padding on the auction sheet
-
-type state = "Processing" | "Placed" | "Error"
-
 export default function AuctionSheet(props: {
-    signer: Signer
+    mnemonic: string
     pic: string
 }) {
     let [imageWidth, setImageWidth] = useState<Number>(0)

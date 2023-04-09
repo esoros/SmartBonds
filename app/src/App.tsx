@@ -2,14 +2,13 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import { ConnectMetamask } from './Components/ConnectMetamask'
 import { ContractInterface, Signer } from 'ethers'
-import MintBond from './Components/MintBond'
 import Header, { Layout } from './Components/Header'
-import Auction from './Components/Auction'
 import Collection from './Components/Collection'
 import TokenService from './Services/TokenService'
 import Donate from './Components/Donate'
 import ActionSheet from './Components/ActionSheet'
 import Admin from './Components/Admin'
+import Auction from './Components/Auction'
 
 export type Config = {
   donationAddress: string,
@@ -38,23 +37,23 @@ function createTokenService() {
   return tokenService
 }
 
-function getLayout(layout: Layout, signer: Signer, tokenService: TokenService, config: Config, renderHeight: number) {
+function getLayout(layout: Layout, mnemonic: string, config: Config, renderHeight: number) {
   switch(layout) {
     case "Auction":
-        return <Auction signer={signer}/>
+        return <Auction mnemonic={mnemonic}/>
     case "Collection":
-        return <Collection signer={signer} />
+        return <Collection mnemonic={mnemonic} />
       case "Home": 
-        return <Collection signer={signer} />
+        return <Collection mnemonic={mnemonic} />
       case "Donate":
-        return <Donate config={config} signer={signer} renderHeight={renderHeight}></Donate>
+        return <Donate config={config} mnemonic={mnemonic} renderHeight={renderHeight}></Donate>
       case "Admin":
-        return <Admin signer={signer} renderHeight={renderHeight}/>
+        return <Admin mnemonic={mnemonic} renderHeight={renderHeight}/>
   }
 }
 
 function App() {
-  const [wallet, setWallet] = useState<Signer>()
+  const [menmonic, setMnemonic] = useState<string>()
   const [layout, setLayout] = useState<Layout>("Home")
   const [err, setErr] = useState<string>()
   const [tokenService, _] = useState(createTokenService())
@@ -79,20 +78,20 @@ function App() {
     return <p>Loading...</p>
   }
 
-  return wallet == undefined ? 
-    <ConnectMetamask onConnect={setWallet}></ConnectMetamask> : 
+  return menmonic == undefined ? 
+    <ConnectMetamask onConnect={setMnemonic}></ConnectMetamask> : 
     <div style={{overflowX: "hidden", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100%"}}>
         <ActionSheet tokenService={tokenService} />
         <div style={{height: "1%"}} />
         <div style={{flexDirection: "row", width: "100%", display: "flex"}}>
-          <Header onRenderHeight={setRenderHeight} onLayout={setLayout} signer={wallet} />
+          <Header onRenderHeight={setRenderHeight} onLayout={setLayout} mnemonic={menmonic} />
           <div style={{flexGrow: 1}} />
         </div>
         <div style={{flexGrow: 1}} />
         {
           <div style={{display: "flex", flexDirection: "row", width: "100%", height: "100%"}}>
             <div style={{width: "1%"}} />
-            {getLayout(layout, wallet, tokenService, config, renderHeight)}
+            {getLayout(layout, menmonic, config, renderHeight)}
             <div style={{width: "1%"}} />
           </div>
         }

@@ -1,10 +1,8 @@
 import { Signer } from "ethers"
 import { createRef, useEffect, useState } from "react"
 
-//natural height and width from image?
-
 export default function Admin(props: {
-    signer: Signer,
+    mnemonic: string,
     renderHeight: number
 }) {
     const [blob, setBlob] = useState<Blob>()

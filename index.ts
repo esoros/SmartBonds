@@ -45,6 +45,16 @@ function main() {
         res.send({"ping": "pong"})
     })
 
+    app.get("/api/balance", (req, res) => {
+        res.contentType("text/html")
+        res.status(200)
+        res.send("0.00")
+    })
+
+    app.get("/api/sendTransaction", (req, res) => {
+        
+    })
+
     app.get("/healthy", (req, res) => {
         res.status(200)
         res.contentType("json")
