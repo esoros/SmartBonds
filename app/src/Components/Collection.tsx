@@ -3,7 +3,7 @@ import "../App.css"
 import AuctionSheet from "./Sheets/AuctionSheet"
 import { createRef, useEffect, useState } from "react"
 
-export function CollectionCard(props: {pic: string, mnemonic: string}) {
+export function CollectionCard(props: {pic: string, signer: Signer}) {
     let divRef = createRef<HTMLDivElement>()
     let imgRef = createRef<HTMLImageElement>()
     let [imageWidth, setImageWidth] = useState<number>(0)
@@ -45,7 +45,7 @@ export function CollectionCard(props: {pic: string, mnemonic: string}) {
 
     function showAuctionDialog() {
         document.getElementById("root")?.dispatchEvent(new CustomEvent("ShowActionSheet", {
-            detail: <AuctionSheet mnemonic={props.mnemonic} pic={props.pic} />
+            detail: <AuctionSheet pic={props.pic} />
         }))
     }    
     return <div ref={divRef} style={{height: "375px", borderRadius: ".5rem", background: "rgb(249,249,249)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'center'}}>
@@ -60,7 +60,7 @@ export function CollectionCard(props: {pic: string, mnemonic: string}) {
 }
 
 export default function Collection(props: {
-    mnemonic: string,
+    mnemonic: Signer,
 }) {
     let [width, setWidth] = useState<number>(window.innerWidth)
     let [pics, _] = useState(new Set(["9707", "6898", "1066", "1923", "3796", "2250", "4020", "4113", "4061", "4863", "6094", "4960", "5360", "5076", "5661", "6094", "1066"].sort(() => .5 - Math.random())))
@@ -84,7 +84,7 @@ export default function Collection(props: {
     return   <div className={gridClass}>
                 {
                     Array.from(pics).map(pic => {
-                        return <CollectionCard mnemonic={props.mnemonic} pic={pic} />
+                        return <CollectionCard signer={props.mnemonic} pic={pic} />
                     })
                 }
         </div>

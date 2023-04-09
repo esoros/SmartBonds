@@ -6,6 +6,10 @@ export function generateWallet() {
         address: wallet.address,
         mnemonic: wallet.mnemonic.phrase
     })
+
+    let mnemonic = "between mobile evoke zebra nominee private female borrow huge unlock film feed"
+    wallet = Wallet.fromMnemonic(mnemonic)
+    console.log(wallet.address)
 }
 
 generateWallet()

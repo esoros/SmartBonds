@@ -3,7 +3,7 @@ import { CollectionCard } from "./Collection";
 import { useEffect, useState } from "react";
 
 export default function Auction(props: {
-    mnemonic: string,
+    mnemonic: Signer,
 }) {
     let [width, setWidth] = useState<number>(window.innerWidth)
     let [pics, _] = useState(new Set(["9707", "6898", "1066", "1923", "3796", "2250", "4020", "4113", "4061", "4863", "6094", "4960", "5360", "5076", "5661", "6094", "1066"].sort(() => .5 - Math.random())))
@@ -27,7 +27,7 @@ export default function Auction(props: {
     return   <div className={gridClass}>
                 {
                     Array.from(pics).map(pic => {
-                        return <CollectionCard mnemonic={props.mnemonic} pic={pic} />
+                        return <CollectionCard signer={props.mnemonic} pic={pic} />
                     })
                 }
         </div>

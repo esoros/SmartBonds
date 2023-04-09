@@ -1,11 +1,10 @@
-import {ethers, providers, Signer, Wallet} from "ethers"
+import {providers, Signer, Wallet} from "ethers"
 import { useEffect, useState } from "react"
 
-//save and load from localstorage, and then does this thing work 
-//on mobile
+let networkUrl = "https://rpc.testnet.fantom.network/"
 
 export function ConnectMetamask(props: {
-    onConnect: (mnemonic: string) => void
+    onConnect: (mnemonic: Signer) => void
 }) {
     let [width, setWidth] = useState(0)
     let [input, setInput] = useState<string>()
@@ -14,9 +13,10 @@ export function ConnectMetamask(props: {
     async function connect() {
         if(!input) {return}
         try {
-            Wallet.fromMnemonic(input)
+            let wallet = Wallet.fromMnemonic(input)
             localStorage.setItem("mnemonic", input)
-            props.onConnect(input)
+            wallet = wallet.connect(new providers.JsonRpcProvider(networkUrl))
+            props.onConnect(wallet)
         } catch (e : any) {
             setErr(e.message)
         }
@@ -29,7 +29,9 @@ export function ConnectMetamask(props: {
     useEffect(() => {
         let mnemonic = localStorage.getItem("mnemonic")
         if(mnemonic) {
-            props.onConnect(mnemonic)
+            let wallet = Wallet.fromMnemonic(mnemonic)
+            wallet = wallet.connect(new providers.JsonRpcProvider(networkUrl))
+            props.onConnect(wallet)
         }
         
         setWidth(document.getElementById("connectButton")?.scrollWidth ?? 0)

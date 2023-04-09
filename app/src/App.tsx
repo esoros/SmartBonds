@@ -37,7 +37,7 @@ function createTokenService() {
   return tokenService
 }
 
-function getLayout(layout: Layout, mnemonic: string, config: Config, renderHeight: number) {
+function getLayout(layout: Layout, mnemonic: Signer, config: Config, renderHeight: number) {
   switch(layout) {
     case "Auction":
         return <Auction mnemonic={mnemonic}/>
@@ -46,14 +46,14 @@ function getLayout(layout: Layout, mnemonic: string, config: Config, renderHeigh
       case "Home": 
         return <Collection mnemonic={mnemonic} />
       case "Donate":
-        return <Donate config={config} mnemonic={mnemonic} renderHeight={renderHeight}></Donate>
+        return <Donate config={config} signer={mnemonic} renderHeight={renderHeight}></Donate>
       case "Admin":
         return <Admin mnemonic={mnemonic} renderHeight={renderHeight}/>
   }
 }
 
 function App() {
-  const [menmonic, setMnemonic] = useState<string>()
+  const [menmonic, setMnemonic] = useState<Signer>()
   const [layout, setLayout] = useState<Layout>("Home")
   const [err, setErr] = useState<string>()
   const [tokenService, _] = useState(createTokenService())

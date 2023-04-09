@@ -2,7 +2,7 @@ import { Signer } from "ethers"
 import { createRef, useEffect, useState } from "react"
 
 export default function Admin(props: {
-    mnemonic: string,
+    mnemonic: Signer,
     renderHeight: number
 }) {
     const [blob, setBlob] = useState<Blob>()

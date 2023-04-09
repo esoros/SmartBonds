@@ -1,3 +1,5 @@
-almost done :)
-fixing auciton sheet, matketplace sizing, and not loading all pics on first load (probably from refs or dom not loading...)
+removing API and then using ethers w/o metmask on the client for mobile
+and then fixing image loading on mobile
 test wallet: between mobile evoke zebra nominee private female borrow huge unlock film feed
+
+

@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react"
-import { Signer } from "ethers"
+
+//adding fix for loading image into this
 
 export default function AuctionSheet(props: {
-    mnemonic: string
     pic: string
 }) {
     let [imageWidth, setImageWidth] = useState<Number>(0)
     let [bidAmount, setBidAmount] = useState<string>("Bid Amount:")
+    let [naturalImageWidth, setNaturalImageWidth] = useState<number>()
+    let [naturalImageHeight, setNaturalImageHeight] = useState<number>()
 
     function calculateImageWidth() {
         let img  = document.getElementById("audctionsheet_image_div") as HTMLImageElement
         let div = document.getElementById("auctionsheet_div") as HTMLDivElement
+        
         if(img.naturalHeight < div.scrollHeight && img.naturalWidth < div.scrollWidth) {
             setImageWidth(img.naturalWidth)
         } else {
@@ -20,10 +23,25 @@ export default function AuctionSheet(props: {
         }
     }
 
+    function setImageNaturalWidthAndHeight(e: any) {
+        setNaturalImageWidth((e.target as any).naturalWidth)
+        setNaturalImageHeight((e.target as any).naturalHeight)
+    }
+
     useEffect(() => {
         calculateImageWidth()
+    }, [naturalImageHeight, naturalImageWidth])
+
+    useEffect(() => {
+        let img  = document.getElementById("audctionsheet_image_div") as HTMLImageElement
+        calculateImageWidth()
         window.addEventListener("resize", calculateImageWidth)
-        return () => window.removeEventListener("resize", calculateImageWidth)
+        img.addEventListener("load", setImageNaturalWidthAndHeight)
+
+        return () => {
+            window.removeEventListener("resize", calculateImageWidth)
+            img.removeEventListener("load", setImageNaturalWidthAndHeight)
+        }
     }, [])
 
     function placeBid() {

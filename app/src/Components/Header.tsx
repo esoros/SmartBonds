@@ -7,8 +7,9 @@ export type Layout = "Home" | "Collection" | "Auction" | "Donate" | "Admin"
 export default function Header(props: {
     onLayout: (layout: Layout) => void,
     onRenderHeight?: (height: number) => void
-    mnemonic: string
+    mnemonic: Signer
 }) {
+    let [err, setErr] = useState<string>()
     let [eth, setEth] = useState<BigNumber>()
     let [address, setAddress] = useState("")
     let [renderHeight, setRenderHeight] = useState<number>()
@@ -17,7 +18,10 @@ export default function Header(props: {
     let distRef = createRef<HTMLDivElement>()
 
     function getWalletBalance() {
-        
+        props.mnemonic.getAddress().then(address => {
+            setAddress(address)
+            props.mnemonic.provider!.getBalance(address).then(setEth)
+        })
     }
 
     function ethUpdated() {
@@ -50,6 +54,10 @@ export default function Header(props: {
         }
     }, [renderHeight])
 
+    if(err) {
+        return <p>unable to get balance</p>
+    }
+
     if(renderWidth <= 600) {
         return <div ref={distRef} className="header" style={{display: "flex", flexDirection: "row", maxWidth: "100%", width: "100%", alignItems: "center", justifyContent: "center"}}>
                 <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.ai</h2>
@@ -62,6 +70,7 @@ export default function Header(props: {
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
                     >
+                        <button style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
                         <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
                             props.onLayout("Home")
                             setShowDropdown(false)
@@ -79,6 +88,11 @@ export default function Header(props: {
                             props.onLayout("Donate")
                             setShowDropdown(false)
                         }} style={{height: "7vh"}}>😃 Donate</button>
+                        <button onClick={() => {
+                            window.localStorage.clear()
+                            window.location.href = ""
+                        }} style={{height: "7vh"}}>Logout
+                        </button>
                     </div> : <></>
                 }
             </div>
@@ -107,11 +121,17 @@ export default function Header(props: {
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
                     >
+                        <button style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
                         <button style={{height: "7vh", minHeight: "50px"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
                         <button onClick={() => {
                             props.onLayout("Donate")
                             setShowDropdown(false)
                         }} style={{height: "7vh", minHeight: "50px"}}>😃 Donate</button>
+                        <button onClick={() => {
+                            window.localStorage.clear()
+                            window.location.href = ""
+                        }} style={{height: "7vh", minHeight: "50px"}}>Logout
+                        </button>
                     </div> : <></>
                 }
             </div>
@@ -127,8 +147,14 @@ export default function Header(props: {
             <button style={{height: "7vh"}} onClick={() => props.onLayout("Admin")}>Admin</button> : 
             <></>
         }
+        <button style={{height: "7vh"}}>{address.substring(0, 6)}</button>
         <button style={{height: "7vh"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
         <button onClick={() => props.onLayout("Donate")} style={{height: "7vh"}}>😃 Donate</button>
+        <button onClick={() => {
+                            window.localStorage.clear()
+                            window.location.href = ""
+                        }} style={{height: "7vh", minHeight: "50px"}}>Logout
+        </button>
     </div>
     }
 }
