@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react"
 
-//adding fix for loading image into this
-
 export default function AuctionSheet(props: {
     pic: string
 }) {
@@ -33,8 +31,8 @@ export default function AuctionSheet(props: {
     }, [naturalImageHeight, naturalImageWidth])
 
     useEffect(() => {
-        let img  = document.getElementById("audctionsheet_image_div") as HTMLImageElement
         calculateImageWidth()
+        let img  = document.getElementById("audctionsheet_image_div") as HTMLImageElement
         window.addEventListener("resize", calculateImageWidth)
         img.addEventListener("load", setImageNaturalWidthAndHeight)
 
