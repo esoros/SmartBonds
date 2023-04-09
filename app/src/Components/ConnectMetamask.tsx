@@ -39,9 +39,9 @@ export function ConnectMetamask(props: {
         return () => window.removeEventListener('resize', setw)
     },[])
     
-    return <div className="connectMetamask" style={{height: "100%", width: "100%"}}>
+    return <div className="connectMetamask" style={{height: "100%", width: "100%", gap: ".25rem"}}>
         {err ? <p>invalid mnemonic</p> : <></>}
-        <h2>SmartBonds.ai</h2>
+        <h2 style={{padding: 0, margin: 0}}>smartbonds.ai</h2>
         <textarea placeholder="please enter your mnemonic" style={{height: "10vh", width: (width - 10) + "px"}} value={input} onChange={(e) => setInput(e.target.value)} />
         <button id="connectButton" style={{height: "10vh"}} onClick={(connect)}>Connect</button>
     </div>

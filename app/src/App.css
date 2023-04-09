@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+textarea {
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  resize: none;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
 .auctionButton {
   height: 3vh
 }
