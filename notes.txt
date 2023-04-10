@@ -1,5 +1,3 @@
-removing API and then using ethers w/o metmask on the client for mobile
-and then fixing image loading on mobile
 test wallet: between mobile evoke zebra nominee private female borrow huge unlock film feed
 
 
