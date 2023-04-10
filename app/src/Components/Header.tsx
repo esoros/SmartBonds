@@ -62,6 +62,7 @@ export default function Header(props: {
         return <div ref={distRef} className="header" style={{display: "flex", flexDirection: "row", maxWidth: "100%", width: "100%", alignItems: "center", justifyContent: "center"}}>
                 <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.ai</h2>
                 <div id="header_spacer" style={{flexGrow: 1}} />
+                <input type="input" style={{width: "10vw", border: "solid rgb(249,249,249) 5px", padding: "1rem", borderRadius: ".25rem"}} placeholder="🔍" />
                 <button id="menubutton" onClick={() => { setShowDropdown(dropdown => !dropdown)}}  style={{height: "7vh", fontSize: "1.25rem"}}>=</button>
                 {
                     showDropdown ? <div style=
@@ -112,6 +113,7 @@ export default function Header(props: {
                     setShowDropdown(false)
                 }}>Wallet</button>
                 <div id="header_spacer" style={{flexGrow: 1}} />
+                <input type="input" style={{width: "10vw", border: "solid rgb(249,249,249) 5px", padding: "1rem", borderRadius: ".25rem"}} placeholder="🔍" />
                 <button id="menubutton" onClick={() => { setShowDropdown(dropdown => !dropdown)}} 
                     style={{height: "7vh", minHeight: "50px", fontSize: "1.25rem"}}>=</button>
                 {
@@ -142,6 +144,7 @@ export default function Header(props: {
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Auction")}>Marketplace</button>
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Collection")}>Wallet</button>
         <div id="header_spacer" style={{flexGrow: 1}} />
+        <input type="input" style={{width: "10vw", border: "solid rgb(249,249,249) 5px", padding: "1rem", borderRadius: ".25rem"}} placeholder="🔍" />
         {
             address == "0x7880aA5B5c9C8d30719Db0747DA60875B9115E19" ? 
             <button style={{height: "7vh"}} onClick={() => props.onLayout("Admin")}>Admin</button> : 
