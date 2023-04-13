@@ -26,6 +26,11 @@ export function ConnectMetamask(props: {
         setWidth(document.getElementById("connectButton")?.scrollWidth ?? 0)
     }
 
+    function generate() {
+        let wallet = Wallet.createRandom()
+        setInput(wallet.mnemonic.phrase)
+    }
+
     useEffect(() => {
         let mnemonic = localStorage.getItem("mnemonic")
         if(mnemonic) {
@@ -43,6 +48,7 @@ export function ConnectMetamask(props: {
         {err ? <p>invalid mnemonic</p> : <></>}
         <h2 style={{padding: 0, margin: 0}}>smartbonds.ai</h2>
         <textarea placeholder="please enter your mnemonic" style={{height: "10vh", width: (width - 10) + "px"}} value={input} onChange={(e) => setInput(e.target.value)} />
+        <button id="connectButton" style={{height: "10vh"}} onClick={(generate)}>Generate Mnemonic</button>
         <button id="connectButton" style={{height: "10vh"}} onClick={(connect)}>Connect</button>
     </div>
 }
