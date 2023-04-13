@@ -70,7 +70,7 @@ export default function Header(props: {
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
                     >
-                        <button style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
+                        <button onClick={() => {alert(address)}} style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
                         <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
                             props.onLayout("Home")
                             setShowDropdown(false)
@@ -121,7 +121,7 @@ export default function Header(props: {
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
                     >
-                        <button style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
+                        <button onClick={() => {alert(address)}} style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
                         <button style={{height: "7vh", minHeight: "50px"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
                         <button onClick={() => {
                             props.onLayout("Donate")
@@ -156,7 +156,7 @@ export default function Header(props: {
                 left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
             }}
             >
-                <button style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
+                <button onClick={() => {alert(address)}} style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
                 <button style={{height: "7vh", minHeight: "50px"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
                 <button onClick={() => {
                     props.onLayout("Donate")

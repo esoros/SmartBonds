@@ -73,10 +73,6 @@ function App() {
         setErr("unable to load config")
       }
     })
-
-    window.addEventListener("popstate", (e) => {
-      alert("hello")
-    })
   }, [])
 
   if(err) {
@@ -94,7 +90,7 @@ function App() {
         <div style={{height: "1%"}} />
         <div style={{flexDirection: "row", width: "100%", display: "flex"}}>
           <Header onRenderHeight={setRenderHeight} onLayout={(layout) => {
-            window.history.pushState(layout, "", layout)
+            window.history.pushState(layout, "", "/" + layout)
             setLayout(layout)
           }} mnemonic={menmonic} />
           <div style={{flexGrow: 1}} />
