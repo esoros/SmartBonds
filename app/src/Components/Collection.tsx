@@ -48,7 +48,7 @@ export function CollectionCard(props: {pic: string, signer: Signer}) {
             detail: <AuctionSheet pic={props.pic} />
         }))
     }    
-    return <div ref={divRef} style={{height: "375px", borderRadius: ".5rem", background: "rgb(249,249,249)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'center'}}>
+    return <div ref={divRef} style={{height: "375px", borderRadius: ".5rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: 'center'}}>
         <div className="collectionImg" style={{display: "flex", flexDirection: "column", height: "100%", zIndex: 0, width: "60%", placeSelf: "center", justifyContent: "center"}}>
             <img  ref={imgRef} onClick={showAuctionDialog} src={"/IMG_" +  props.pic +".png"} style={{width: imageWidth + "px", placeSelf: "center", borderRadius: ".25rem .25rem 0px 0px"}} />
             <div className="nftButton" onClick={showAuctionDialog} style={{borderRadius: "0px 0px .5rem .5rem", placeSelf: "center", display: "flex", flexDirection: "row", justifyContent: "space-around", backgroundColor: "white", width: imageWidth + "px"}}>
