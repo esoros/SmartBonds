@@ -2,13 +2,16 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import { ConnectMetamask } from './Components/ConnectMetamask'
 import { ContractInterface, Signer } from 'ethers'
-import Header, { Layout } from './Components/Header'
-import Collection from './Components/Collection'
+import Header from './Components/Header'
+import Collections from './Components/Collections'
 import TokenService from './Services/TokenService'
 import Donate from './Components/Donate'
 import ActionSheet from './Components/ActionSheet'
 import Admin from './Components/Admin'
 import Auction from './Components/Auction'
+import { Layout } from './Layout'
+import Collection from './Components/Collection'
+import Wallet from './Components/Wallet'
 
 export type Config = {
   donationAddress: string,
@@ -38,17 +41,19 @@ function createTokenService() {
 }
 
 function getLayout(layout: Layout, mnemonic: Signer, config: Config, renderHeight: number) {
-  switch(layout) {
-    case "Auction":
-        return <Auction mnemonic={mnemonic}/>
-    case "Collection":
-        return <Collection mnemonic={mnemonic} />
-      case "Home": 
-        return <Collection mnemonic={mnemonic} />
-      case "Donate":
-        return <Donate config={config} signer={mnemonic} renderHeight={renderHeight}></Donate>
-      case "Admin":
-        return <Admin mnemonic={mnemonic} renderHeight={renderHeight}/>
+  if(window.location.href.includes("collection")) {
+    return <Collection mnemonic={mnemonic} />
+  } else if (window.location.href.includes("Auction")) {
+    return <Auction mnemonic={mnemonic}/>
+  } else if (window.location.href.includes("Donate")) {
+    return <Donate config={config} signer={mnemonic} renderHeight={renderHeight}></Donate>
+  } else if (window.location.href.includes("Admin")) {
+    return <Admin mnemonic={mnemonic} renderHeight={renderHeight}/>
+  } else if (window.location.href.includes("Wallet")) {
+    return <Wallet mnemonic={mnemonic} />
+  }
+  else {
+    return <Collections onSelectCollection={() => {}} mnemonic={mnemonic} />
   }
 }
 
@@ -61,12 +66,16 @@ function App() {
   const [renderHeight, setRenderHeight] = useState<number>(0)
 
   useEffect(() => {
-    fetch("./config.json").then(async resp => {
+    fetch("/config.json").then(async resp => {
       if(resp.ok) {
         setConfig(verifyConfig(await resp.json()))
       } else {
         setErr("unable to load config")
       }
+    })
+
+    window.addEventListener("popstate", (e) => {
+      alert("hello")
     })
   }, [])
 
@@ -84,7 +93,10 @@ function App() {
         <ActionSheet tokenService={tokenService} />
         <div style={{height: "1%"}} />
         <div style={{flexDirection: "row", width: "100%", display: "flex"}}>
-          <Header onRenderHeight={setRenderHeight} onLayout={setLayout} mnemonic={menmonic} />
+          <Header onRenderHeight={setRenderHeight} onLayout={(layout) => {
+            window.history.pushState(layout, "", layout)
+            setLayout(layout)
+          }} mnemonic={menmonic} />
           <div style={{flexGrow: 1}} />
         </div>
         <div style={{flexGrow: 1}} />

@@ -2,8 +2,8 @@ import { createRef, useEffect, useState } from "react"
 import "../App.css"
 import { BigNumber, Signer } from "ethers"
 import { formatEth } from "../Utils/Utils"
+import { Layout } from "../Layout"
 
-export type Layout = "Home" | "Collection" | "Auction" | "Donate" | "Admin"
 export default function Header(props: {
     onLayout: (layout: Layout) => void,
     onRenderHeight?: (height: number) => void
@@ -80,7 +80,7 @@ export default function Header(props: {
                             setShowDropdown(false)
                         }}>Marketplace</button>
                         <button style={{height: "7vh"}} onClick={() => {
-                            props.onLayout("Collection")
+                            props.onLayout("Wallet")
                             setShowDropdown(false)
                         }}>Wallet</button>
                         <button style={{height: "7vh"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
@@ -109,7 +109,7 @@ export default function Header(props: {
                     setShowDropdown(false)
                 }}>Marketplace</button>
                 <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
-                    props.onLayout("Collection")
+                    props.onLayout("Wallet")
                     setShowDropdown(false)
                 }}>Wallet</button>
                 <button id="menubutton" onClick={() => { setShowDropdown(dropdown => !dropdown)}} 
@@ -141,7 +141,7 @@ export default function Header(props: {
         <div style={{flexGrow : 1}} />
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Home")}>Home</button>
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Auction")}>Marketplace</button>
-        <button style={{height: "7vh"}} onClick={() => props.onLayout("Collection")}>Wallet</button>
+        <button style={{height: "7vh"}} onClick={() => props.onLayout("Wallet")}>Wallet</button>
         {
             address == "0x7880aA5B5c9C8d30719Db0747DA60875B9115E19" ? 
             <button style={{height: "7vh"}} onClick={() => props.onLayout("Admin")}>Admin</button> : 

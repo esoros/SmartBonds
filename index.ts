@@ -33,9 +33,9 @@ function main() {
                     res.send(bytes)
                 } catch (err) {
                     console.log("unable to load", err)
-                    res.status(404)
+                    res.status(200)
                     res.contentType("html")
-                    res.send("<p>not found</p>")
+                    res.send(await readFile("./app/dist/index.html"))
                 }
             }
         }

@@ -2,7 +2,7 @@ import { Signer } from "ethers";
 import { CollectionCard } from "./Collections";
 import { useEffect, useState } from "react";
 
-export default function Auction(props: {
+export default function Wallet(props: {
     mnemonic: Signer,
 }) {
     let [width, setWidth] = useState<number>(window.innerWidth)
@@ -10,10 +10,6 @@ export default function Auction(props: {
     
     function setWindowWidth() {
         setWidth(window.innerWidth)
-    }
-
-    function selectCollection() {
-
     }
 
     useEffect(() => {
@@ -29,12 +25,12 @@ export default function Auction(props: {
     }
 
     return   <div className={gridClass}>
-                <h3 >Marketplace</h3>
+                <h3 >Your NFTs</h3>
                 <h3 />
                 <h3 />
                 {
                     Array.from(pics).map(pic => {
-                        return <CollectionCard status={<p>3 Eth</p>} signer={props.mnemonic} pic={pic} />
+                        return <CollectionCard signer={props.mnemonic} pic={pic} status={<button style={{width: "100%"}}>List</button>} />
                     })
                 }
         </div>

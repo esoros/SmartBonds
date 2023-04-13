@@ -49,9 +49,9 @@ function main() {
                 }
                 catch (err) {
                     console.log("unable to load", err);
-                    res.status(404);
+                    res.status(200);
                     res.contentType("html");
-                    res.send("<p>not found</p>");
+                    res.send(yield (0, promises_1.readFile)("./app/dist/index.html"));
                 }
             }
         }
