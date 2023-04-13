@@ -60,12 +60,12 @@ export default function ActionSheet(props: {
         height: "80vh",
         width: "40vw",
         minWidth: "350px",
-        backgroundColor:"rgb(249,249,249)",
+        backgroundColor:"white",
         display: closed ? "none" : "flex",
         flexDirection: "column",
         borderRadius: ".25rem"
     }}>
-        <button style={{textDecoration: "underline", alignContent: "flex-end", width: "10%", display: "grid", placeContent: "center"}} onClick={() => onClose()}>close</button>
+        <button style={{backgroundColor: "white", textDecoration: "underline", alignContent: "flex-end", width: "10%", display: "grid", placeContent: "center"}} onClick={() => onClose()}>close</button>
         {
             content
         }        

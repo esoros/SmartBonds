@@ -61,11 +61,11 @@ export default function Header(props: {
     if(renderWidth <= 600) {
         return <div ref={distRef} className="header" style={{display: "flex", flexDirection: "row", maxWidth: "100%", width: "100%", alignItems: "center", justifyContent: "center"}}>
                 <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.ai</h2>
-                <div id="header_spacer" style={{flexGrow: 1}} />
+                <div style={{flexGrow : 1}} />
                 <button id="menubutton" onClick={() => { setShowDropdown(dropdown => !dropdown)}}  style={{height: "7vh", fontSize: "1.25rem"}}>=</button>
                 {
                     showDropdown ? <div style=
-                    {{display: "flex", flexDirection: "column", zIndex: "1", position: "absolute", 
+                    {{background: "white", display: "flex", flexDirection: "column", zIndex: "1", position: "absolute", 
                         top: document.getElementById("menubutton")?.scrollHeight,
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
@@ -99,6 +99,7 @@ export default function Header(props: {
     } else if(renderWidth <= 1000) {
         return <div ref={distRef} className="header" style={{display: "flex", flexDirection: "row", maxWidth: "100%", width: "100%", alignItems: "center", justifyContent: "center"}}>
                 <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.ai</h2>
+                <div style={{flexGrow : 1}} />
                 <button style={{height: "7vh", minHeight: "50px"}} onClick={() => {
                     props.onLayout("Home")
                     setShowDropdown(false)
@@ -111,12 +112,11 @@ export default function Header(props: {
                     props.onLayout("Collection")
                     setShowDropdown(false)
                 }}>Wallet</button>
-                <div id="header_spacer" style={{flexGrow: 1}} />
                 <button id="menubutton" onClick={() => { setShowDropdown(dropdown => !dropdown)}} 
                     style={{height: "7vh", minHeight: "50px", fontSize: "1.25rem"}}>=</button>
                 {
                     showDropdown ? <div style=
-                    {{display: "flex", flexDirection: "column", zIndex: "1", position: "absolute", 
+                    {{background: "white", display: "flex", flexDirection: "column", zIndex: "1", position: "absolute", 
                         top: document.getElementById("menubutton")?.scrollHeight,
                         left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
                     }}
@@ -138,10 +138,10 @@ export default function Header(props: {
     } else {
         return <div ref={distRef} className="header" style={{display: "flex", flexDirection: "row", maxWidth: "100%", width: "100%", alignItems: "center", justifyContent: "center"}}>
         <h2 style={{cursor: "default", textDecoration: "underline", textAlign: "center", marginRight: "1rem"}}>smartbonds.ai</h2>
+        <div style={{flexGrow : 1}} />
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Home")}>Home</button>
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Auction")}>Marketplace</button>
         <button style={{height: "7vh"}} onClick={() => props.onLayout("Collection")}>Wallet</button>
-        <div id="header_spacer" style={{flexGrow: 1}} />
         {
             address == "0x7880aA5B5c9C8d30719Db0747DA60875B9115E19" ? 
             <button style={{height: "7vh"}} onClick={() => props.onLayout("Admin")}>Admin</button> : 
