@@ -93,7 +93,7 @@ export default function Collections(props: {
                 <h3 onClick={() => {
                     window.location.href = "/collection/Lebron%20James"
                     props.onSelectCollection()
-                }} className="collectionImg" style={{cursor: "pointer"}}>Lebron James Collection (12 items)</h3>
+                }} className="collectionImg" style={{cursor: "pointer", textDecoration: "underline"}}>Lebron James Collection (12 items)</h3>
                 <h3 />
                 <h3 />
                 {
@@ -104,7 +104,7 @@ export default function Collections(props: {
                 <h3 onClick={() => {
                 window.location.href = "/collection/Team%20Spirit"
                 props.onSelectCollection()
-                }} className="collectionImg" style={{cursor: "pointer"}}>Team Spirit (12 items)</h3>
+                }} className="collectionImg" style={{cursor: "pointer", textDecoration: "underline"}}>Team Spirit (12 items)</h3>
                 <h3 />
                 <h3 />
                 {
