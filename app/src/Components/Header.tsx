@@ -147,14 +147,28 @@ export default function Header(props: {
             <button style={{height: "7vh"}} onClick={() => props.onLayout("Admin")}>Admin</button> : 
             <></>
         }
-        <button style={{height: "7vh"}}>{address.substring(0, 6)}</button>
-        <button style={{height: "7vh"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
-        <button onClick={() => props.onLayout("Donate")} style={{height: "7vh"}}>😃 Donate</button>
-        <button onClick={() => {
-                            window.localStorage.clear()
-                            window.location.href = ""
-                        }} style={{height: "7vh", minHeight: "50px"}}>Logout
-        </button>
+        <button id="menubutton" onClick={() => { setShowDropdown(dropdown => !dropdown)}} 
+                    style={{height: "7vh", minHeight: "50px", fontSize: "1.25rem"}}>=</button>
+        {
+            showDropdown ? <div style=
+            {{background: "white", display: "flex", flexDirection: "column", zIndex: "1", position: "absolute", 
+                top: document.getElementById("menubutton")?.scrollHeight,
+                left: (document.getElementById("menubutton")?.getBoundingClientRect().left ?? 0) - (document.getElementById("menubutton")?.getBoundingClientRect().width ?? 0)
+            }}
+            >
+                <button style={{height: "7vh", minHeight: "50px"}}>{address.substring(0, 6)}</button>
+                <button style={{height: "7vh", minHeight: "50px"}}>{formatEth(eth ?? BigNumber.from(0))} Eth</button>
+                <button onClick={() => {
+                    props.onLayout("Donate")
+                    setShowDropdown(false)
+                }} style={{height: "7vh", minHeight: "50px"}}>😃 Donate</button>
+                <button onClick={() => {
+                    window.localStorage.clear()
+                    window.location.href = ""
+                }} style={{height: "7vh", minHeight: "50px"}}>Logout
+                </button>
+            </div> : <></>
+        }
     </div>
     }
 }
