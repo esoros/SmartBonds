@@ -26,8 +26,8 @@ export default function Wallet(props: {
 
     return   <div className={gridClass}>
                 <h3 >Your NFTs</h3>
-                <h3 />
-                <h3 />
+                <h3 style={{margin: 0, padding: 0}}/>
+                <h3 style={{margin: 0, padding: 0}}/>
                 {
                     Array.from(pics).map(pic => {
                         return <CollectionCard signer={props.mnemonic} pic={pic} status={<button style={{width: "100%"}}>List</button>} />

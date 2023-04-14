@@ -94,8 +94,8 @@ export default function Collections(props: {
                     window.location.href = "/collection/Lebron%20James"
                     props.onSelectCollection()
                 }} className="collectionImg" style={{cursor: "pointer", textDecoration: "underline"}}>Lebron James Collection (12 items)</h3>
-                <h3 />
-                <h3 />
+                <h3 style={{margin: 0, padding: 0}}/>
+                <h3 style={{margin: 0, padding: 0}}/>
                 {
                     Array.from(collection1).map(pic => {
                         return <CollectionCard signer={props.mnemonic} pic={pic} />
@@ -105,8 +105,8 @@ export default function Collections(props: {
                 window.location.href = "/collection/Team%20Spirit"
                 props.onSelectCollection()
                 }} className="collectionImg" style={{cursor: "pointer", textDecoration: "underline"}}>Team Spirit (12 items)</h3>
-                <h3 />
-                <h3 />
+                <h3 style={{margin: 0, padding: 0}}/>
+                <h3 style={{margin: 0, padding: 0}}/>
                 {
                     Array.from(collection2).map(pic => {
                         return <CollectionCard signer={props.mnemonic} pic={pic} />

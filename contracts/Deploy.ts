@@ -13,7 +13,7 @@ export async function deploy() {
     let abi = await readFile("SmartBonds_sol_SmartBonds.abi").then(buf => buf.toString())
     let bin = await readFile("SmartBonds_sol_SmartBonds.bin").then(buf => buf.toString())   
     let factory = new ContractFactory(abi, bin, wallet)
-    let contract = await factory.deploy()
+    let contract = await factory.deploy("")
     contract = await contract.deployed()
     
     console.log("contract deployed at: ", {

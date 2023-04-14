@@ -24,8 +24,8 @@ export default function Collection(props: {mnemonic: Signer}) {
 
     return  <div className={gridClass}>
                 <h3>{window.location.href.substring(window.location.href.lastIndexOf("/") + 1).replaceAll("%20", " ") + " Collection"}</h3>
-                <h3 />
-                <h3 />
+                <h3 style={{margin: 0, padding: 0}}/>
+                <h3 style={{margin: 0, padding: 0}}/>
                 {
                     Array.from(pics).map(pic => {
                         return <CollectionCard signer={props.mnemonic} pic={pic} />
