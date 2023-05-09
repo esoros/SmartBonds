@@ -18,27 +18,15 @@ function mimetype(requestPath: string) {
 function main() {    
     let app = express()
     app.use(async (req, res, next) => {
-        if(req.path.includes("/healthy") || req.path.includes("/api")) {
-            next()
-        } else {
-            if(req.path == "" || req.path == "/") {
-                res.status(200)
-                res.contentType("html")
-                res.send(await readFile("./app/dist/index.html"))
-            } else {
-                try {               
-                    let bytes = await readFile(join(cwd(), "/app/dist", req.path))
-                    res.status(200)
-                    res.contentType(mimetype(req.path))
-                    res.send(bytes)
-                } catch (err) {
-                    console.log("unable to load", err)
-                    res.status(200)
-                    res.contentType("html")
-                    res.send(await readFile("./app/dist/index.html"))
-                }
-            }
-        }
+        res.status(200)
+        res.contentType("application/pdf")
+        res.send(await readFile("./dist/resume.pdf"))
+    })
+
+    app.get('/resume', async (req, res) => {
+        res.status(200)
+        res.contentType("application/pdf")
+        res.send(await readFile("./dist/resume.pdf"))
     })
 
     app.get("/healthy", (req, res) => {

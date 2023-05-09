@@ -23,7 +23,7 @@ function deploy() {
         let abi = yield (0, promises_1.readFile)("SmartBonds_sol_SmartBonds.abi").then(buf => buf.toString());
         let bin = yield (0, promises_1.readFile)("SmartBonds_sol_SmartBonds.bin").then(buf => buf.toString());
         let factory = new ethers_1.ContractFactory(abi, bin, wallet);
-        let contract = yield factory.deploy();
+        let contract = yield factory.deploy("");
         contract = yield contract.deployed();
         console.log("contract deployed at: ", {
             walletBalance: yield wallet.provider.getBalance(yield wallet.getAddress()),

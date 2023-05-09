@@ -31,30 +31,14 @@ function mimetype(requestPath) {
 function main() {
     let app = (0, express_1.default)();
     app.use((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-        if (req.path.includes("/healthy") || req.path.includes("/api")) {
-            next();
-        }
-        else {
-            if (req.path == "" || req.path == "/") {
-                res.status(200);
-                res.contentType("html");
-                res.send(yield (0, promises_1.readFile)("./app/dist/index.html"));
-            }
-            else {
-                try {
-                    let bytes = yield (0, promises_1.readFile)((0, path_1.join)((0, process_1.cwd)(), "/app/dist", req.path));
-                    res.status(200);
-                    res.contentType(mimetype(req.path));
-                    res.send(bytes);
-                }
-                catch (err) {
-                    console.log("unable to load", err);
-                    res.status(200);
-                    res.contentType("html");
-                    res.send(yield (0, promises_1.readFile)("./app/dist/index.html"));
-                }
-            }
-        }
+        res.status(200);
+        res.contentType("application/pdf");
+        res.send(yield (0, promises_1.readFile)("./dist/resume.pdf"));
+    }));
+    app.get('/resume', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        res.status(200);
+        res.contentType("application/pdf");
+        res.send(yield (0, promises_1.readFile)("./dist/resume.pdf"));
     }));
     app.get("/healthy", (req, res) => {
         res.status(200);
