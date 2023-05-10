@@ -1,7 +1,7 @@
 import express from "express"
 import { readFile } from "fs/promises"
-import { join, extname } from "path"
-import { cwd, env } from "process"
+import { extname } from "path"
+import { env } from "process"
 
 function mimetype(requestPath: string) {
     switch(extname(requestPath)) {
@@ -14,7 +14,8 @@ function mimetype(requestPath: string) {
         case ".ico": return "image/png"
         default: throw new Error("mimetype not found: " + requestPath)
     }
-} 
+}
+
 function main() {    
     let app = express()
     app.use(async (req, res, next) => {
